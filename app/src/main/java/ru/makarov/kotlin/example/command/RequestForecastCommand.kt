@@ -8,7 +8,7 @@ import ru.makarov.kotlin.example.network.Request
  * @author Maxim Makarov
  * @since 12.08.2017
  */
-class RequestForecastCommand(val zipCode: String) : Command<ForecastList> {
+class RequestForecastCommand(private val zipCode: String) : Command<ForecastList> {
     override fun execute(): ForecastList {
         val forecastRequest = Request(zipCode)
         return ForecastDataMapper().convertFromDataModel(forecastRequest.execute())
