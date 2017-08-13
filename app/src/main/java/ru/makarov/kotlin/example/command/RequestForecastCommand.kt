@@ -1,16 +1,20 @@
 package ru.makarov.kotlin.example.command
 
-import ru.makarov.kotlin.example.data.mapper.ForecastDataMapper
 import ru.makarov.kotlin.example.data.ForecastList
-import ru.makarov.kotlin.example.network.Request
+import ru.makarov.kotlin.example.data.provider.ForecastProvider
 
 /**
  * @author Maxim Makarov
  * @since 12.08.2017
  */
-class RequestForecastCommand(private val zipCode: String) : Command<ForecastList> {
+class RequestForecastCommand(val zipCode: Long, val forecastProvider: ForecastProvider = ForecastProvider()) :
+        Command<ForecastList> {
+
+    companion object {
+        val DAYS = 7
+    }
+
     override fun execute(): ForecastList {
-        val forecastRequest = Request(zipCode)
-        return ForecastDataMapper().convertFromDataModel(forecastRequest.execute())
+        return forecastProvider.requestByZipCode(zipCode, DAYS)
     }
 }
