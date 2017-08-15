@@ -34,10 +34,20 @@ dependencies {
 
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+
+    androidTestCompile "com.android.support:support-annotations:$support_version"
+    androidTestCompile "com.android.support.test:runner:0.5" //It’s the test runner, the one we specified in defaultConfig.
+    androidTestCompile "com.android.support.test:rules:0.5" // Includes some rules that help tests inflate and launch the activities
+    androidTestCompile "com.android.support.test.espresso:espresso-core:2.2.2" // basic features of Espresso, the library that makes instrument tests easier
+    androidTestCompile("com.android.support.test.espresso:espresso-contrib:2.2.2") { // some extra features, such as RecyclerView testing support
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
+
     testCompile 'junit:junit:4.12'
+    testCompile "org.mockito:mockito-core:2.8.9"
 }
 
 repositories {
