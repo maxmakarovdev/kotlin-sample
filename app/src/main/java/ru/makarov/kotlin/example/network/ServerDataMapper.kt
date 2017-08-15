@@ -1,6 +1,7 @@
 package ru.makarov.kotlin.example.network
 
 import ru.makarov.kotlin.example.data.ForecastList
+import java.text.DateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import ru.makarov.kotlin.example.data.Forecast as ModelForecast
@@ -23,9 +24,15 @@ class ServerDataMapper {
     }
 
     private fun convertForecastItemToDomain(forecast: Forecast) = with(forecast) {
-        ModelForecast(dt, weather[0].description, temp.max.toInt(), temp.min.toInt(),
+        ModelForecast(dt.toDateString(), weather[0].description, temp.max.toInt(), temp.min.toInt(),
                 generateIconUrl(weather[0].icon))
     }
+
+    fun Long.toDateString(dateFormat: Int = DateFormat.MEDIUM): String {
+        val df = DateFormat.getDateInstance(dateFormat, Locale.getDefault())
+        return df.format(this)
+    }
+
 
     private fun generateIconUrl(iconCode: String) = "http://openweathermap.org/img/w/$iconCode.png"
 }
